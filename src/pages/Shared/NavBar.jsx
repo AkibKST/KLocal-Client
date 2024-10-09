@@ -23,6 +23,9 @@ const NavBar = () => {
       <li>
         <Link to="/order/salad">Our Shop</Link>
       </li>
+      <li>
+        <Link to="/secret">Secret</Link>
+      </li>
     </>
   );
   return (
