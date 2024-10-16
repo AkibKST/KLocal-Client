@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 
 const FoodCard = ({ item }) => {
   const { image, price, recipe, name } = item;
+  const handleAddToCart = (food) => {
+    console.log(food);
+  };
   return (
     <div className="card bg-base-100 w-96 shadow-xl">
       <figure>
@@ -15,7 +18,10 @@ const FoodCard = ({ item }) => {
         <p>{recipe}</p>
         <div className="card-actions justify-end">
           {/* <Link to={``}> */}
-          <button className="btn btn-outline bg-slate-100 border-orange-500 border-0 border-b-4 mt-4">
+          <button
+            onClick={() => handleAddToCart(item)}
+            className="btn btn-outline bg-slate-100 border-orange-500 border-0 border-b-4 mt-4"
+          >
             Add to cart
           </button>
           {/* </Link> */}
