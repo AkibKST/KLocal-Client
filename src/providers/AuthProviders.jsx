@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
-  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -12,11 +12,13 @@ import {
 import { app } from "../firebase/firebase.config";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
-const auth = getAuth(app);
 export const AuthContext = createContext(null);
-const AuthProviders = ({ children }) => {
+
+const auth = getAuth(app);
+
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
   const axiosPublic = useAxiosPublic();
 
@@ -60,7 +62,7 @@ const AuthProviders = ({ children }) => {
           }
         });
       } else {
-        // TODO: remove token (if token stored in the client side: Local Storage, caching, in memory)
+        // TODO: remove token (if token stored in the client side: Local storage, caching, in memory)
         localStorage.removeItem("access-token");
         setLoading(false);
       }
@@ -68,7 +70,7 @@ const AuthProviders = ({ children }) => {
     return () => {
       return unsubscribe();
     };
-  }, []);
+  }, [axiosPublic]);
 
   const authInfo = {
     user,
@@ -79,9 +81,10 @@ const AuthProviders = ({ children }) => {
     logOut,
     updateUserProfile,
   };
+
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
 
-export default AuthProviders;
+export default AuthProvider;
