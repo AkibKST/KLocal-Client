@@ -17,7 +17,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.pathname || "/";
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -30,21 +30,25 @@ const Login = () => {
     const password = form.password.value;
     console.log(email, password);
 
-    signIn(email, password).then((result) => {
-      const user = result.user;
-      console.log(user);
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
 
-      Swal.fire({
-        title: "User Log in Successfully",
-        showClass: {
-          popup: "Welcome To K_Local__fadeInDown",
-        },
-        hideClass: {
-          popup: "Welcome To K_Local__fadeOutUp",
-        },
+        Swal.fire({
+          title: "User Log in Successfully",
+          showClass: {
+            popup: "Welcome To K_Local__fadeInDown",
+          },
+          hideClass: {
+            popup: "Welcome To K_Local__fadeOutUp",
+          },
+        });
+        navigate(from);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      navigate(from, { replace: true });
-    });
   };
 
   const handleValidateCaptcha = (event) => {

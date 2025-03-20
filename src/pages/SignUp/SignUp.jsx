@@ -9,6 +9,8 @@ import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+  const from = "login";
 
   const {
     register,
@@ -18,7 +20,6 @@ const SignUp = () => {
   } = useForm();
 
   const { createUser, updateUserProfile } = useContext(AuthContext);
-  const navigate = useNavigate();
   const onSubmit = (data) => {
     console.log(data);
     createUser(data.email, data.password).then((result) => {
@@ -44,7 +45,7 @@ const SignUp = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              navigate("/");
+              navigate(from);
             }
           });
         })
